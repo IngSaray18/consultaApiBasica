@@ -38,7 +38,7 @@ function ConfirmationPage() {
     try {
       setLoading(true); // Activar el loader
       // Hacer la solicitud GET al servidor
-      const response = await axios.get(`http://localhost:4000/${endpoint}`);
+      const response = await axios.get(`http://localhost:3000/${endpoint}`);
 
       // Manejar la respuesta exitosa aquí
       console.log(response.data);

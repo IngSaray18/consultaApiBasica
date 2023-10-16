@@ -1,7 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { ContextoProcesos } from '../context/ContextoProcesos';
 import { NavLink } from 'react-router-dom';
+import axios from "axios";
 
 
 const optionNames = [
@@ -16,6 +17,7 @@ const optionNames = [
   'RESPALDO CAJAAHORROT',
   'BATCH NORMAL FIN DE DIA'
 ];
+
 
 
 function Inicio() {
@@ -47,8 +49,32 @@ function Inicio() {
       }, {})
     );
   };
+
+  const handleLogout = async () => {
+    
+    try {
+      const response = await axios.get(`http://localhost:4000/user`);
+
+      // Manejar la respuesta exitosa aquí
+      console.log(response);
+      }catch (error) {
+        console.error("Error:", error);
+      }
+
+    console.log('Logging out...');
+  };
+
+  const {usuario} = useContext(ContextoProcesos)
+
   const {listaProcesos} = useContext(ContextoProcesos)
 
+  useEffect(() => {
+    
+  
+    console.log(usuario);
+      
+    
+  }, []);
 
   return (
     <Container>
@@ -71,8 +97,8 @@ function Inicio() {
         </Button>
         <NavLink to={'/Confirmacion'}>
         <Button onClick={handleConfirm}>Confirmar</Button>
-
         </NavLink>
+        <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
       </ButtonContainer>
     </Container>
   );
@@ -98,7 +124,15 @@ const CheckboxContainer = styled.div`
 const CheckboxLabel = styled.label`
   margin-bottom: 8px;
 `;
-
+const LogoutButton = styled.button`
+padding: 10px 20px;
+background-color: #ff0000; /* Red color for logout button */
+color: white;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+  
+`;
 const ButtonContainer = styled.div`
   display: flex;
   gap: 10px;
